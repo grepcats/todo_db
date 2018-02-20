@@ -2,15 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>sudhgvlaukh</title>
+    <title>Add a new item</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
   </head>
   <body>
-    <h1>To Do List</h1>
-    <h3>Add A New Item</h3>
-    <form action="/items" method="post">
-      <label for="new-item">Item Description</label>
-      <input type="text" id="new-item" name="new-item">
-      <button type="submit" class="btn btn-warning" name="button">Add Item</button>
-    </form>
+    <div class="container">
+      <h1>To Do List</h1>
+      <h3>Add A New Item</h3>
+      <form action="/items" method="post">
+        <label for="new-item">Item Description</label>
+        <input type="text" id="new-item" name="new-item">
+        <button type="submit" class="btn btn-warning" name="button">Add Item</button>
+      </form>
+    </div>
   </body>
 </html>
