@@ -94,11 +94,12 @@ namespace ToDoList.Models
 
     public void Save()
     {
+      this.SetDate();
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO `items` (`description`, `raw_date`) VALUES (@ItemDescription, @RawDate);";
+      cmd.CommandText = @"INSERT INTO `items` (`description`, `raw_date`, `formatted_date`) VALUES (@ItemDescription, @RawDate, @FormattedDate);";
 
       MySqlParameter description = new MySqlParameter();
       description.ParameterName = "@ItemDescription";
@@ -108,8 +109,13 @@ namespace ToDoList.Models
       rawDate.ParameterName = "@RawDate";
       rawDate.Value = this._rawDate;
 
+      MySqlParameter formattedDate = new MySqlParameter();
+      formattedDate.ParameterName = "@FormattedDate";
+      formattedDate.Value = this._formattedDate;
+
       cmd.Parameters.Add(description);
       cmd.Parameters.Add(rawDate);
+      cmd.Parameters.Add(formattedDate);
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
