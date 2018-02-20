@@ -18,14 +18,14 @@ namespace ToDoList.Controllers
       return View();
     }
 
-    [HttpPost("/items")]
-    public ActionResult Create()
-    {
-      Item newItem = new Item(Request.Form["new-item"]);
-      newItem.Save();
-      List<Item> allItems = Item.GetAll();
-      return View("Index", allItems);
-    }
+    // [HttpPost("/items")]
+    // public ActionResult Create()
+    // {
+    //   Item newItem = new Item(Request.Form["new-item"]);
+    //   newItem.Save();
+    //   List<Item> allItems = Item.GetAll();
+    //   return View("Index", allItems);
+    // }
 
     [HttpGet("/items/{id}")]
     public ActionResult Detail(int id)

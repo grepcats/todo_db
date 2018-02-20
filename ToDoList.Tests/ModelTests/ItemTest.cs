@@ -23,7 +23,7 @@ namespace ToDoList.Tests
     {
       //arrange
       string controlDesc = "Go to store";
-      Item newItem = new Item("Go to store");
+      Item newItem = new Item("Go to store", "2009-03-29");
 
       //act
       string result = newItem.GetDescription();
@@ -46,7 +46,7 @@ namespace ToDoList.Tests
     public void Save_SavesToDatabase_ItemList()
     {
       //arrange
-      Item testItem = new Item("Go to store");
+      Item testItem = new Item("Mow the lawn", "2008-03-02");
 
       //act
       testItem.Save();
@@ -61,8 +61,8 @@ namespace ToDoList.Tests
     public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
     {
       //Arrange, act
-      Item firstItem = new Item("Mow the lawn");
-      Item secondItem = new Item("Mow the lawn");
+      Item firstItem = new Item("Mow the lawn", "2008-03-02");
+      Item secondItem = new Item("Mow the lawn", "2008-03-02");
 
       //Assert
       Assert.AreEqual(firstItem, secondItem);
@@ -72,7 +72,7 @@ namespace ToDoList.Tests
     public void Save_AssignsIdToObject_Id()
     {
       //arrange
-      Item testItem = new Item("Mow the lawn");
+      Item testItem = new Item("Mow the lawn", "2008-03-02");
 
       //act
       testItem.Save();
@@ -89,7 +89,7 @@ namespace ToDoList.Tests
     public void Find_FindsItemInDatabase_Item()
     {
       //Arrange
-      Item testItem = new Item("Mow the lawn");
+      Item testItem = new Item("Mow the lawn", "2008-03-02");
       testItem.Save();
 
       //act
@@ -97,6 +97,21 @@ namespace ToDoList.Tests
 
       //assert
       Assert.AreEqual(testItem, foundItem);
+    }
+
+    [TestMethod]
+    public void GetFormattedDate_FetchDate_Date()
+    {
+      //arrange
+      Item testItem = new Item("Mow the lawn", "2008-03-02");
+      DateTime controlDate = new DateTime(2008, 03, 02);
+
+      //act
+      testItem.SetDate();
+      DateTime result = testItem.GetFormattedDate();
+
+      //assert
+      Assert.AreEqual(result, controlDate);
     }
 
   }

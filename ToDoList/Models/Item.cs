@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace ToDoList.Models
 {
@@ -7,11 +8,31 @@ namespace ToDoList.Models
   {
     private string _description;
     private int _id;
+    private string _rawDate;
+    private DateTime _formattedDate;
 
-    public Item (string description, int Id = 0)
+    public Item (string description, string rawDate, int Id = 0)
     {
       _description = description;
       _id = Id;
+      _rawDate = rawDate;
+      _formattedDate = new DateTime();
+    }
+
+    public DateTime GetFormattedDate()
+    {
+      return _formattedDate;
+    }
+
+    public void SetDate()
+    {
+      string[] dateArray = _rawDate.Split('-');
+      List<int> intDateList = new List<int>{};
+      foreach (string num in dateArray)
+      {
+        intDateList.Add(Int32.Parse(num));
+      }
+      _formattedDate = new DateTime(intDateList[0], intDateList[1], intDateList[2]);
     }
 
     public string GetDescription()
@@ -41,7 +62,9 @@ namespace ToDoList.Models
       {
         int itemId = rdr.GetInt32(0);
         string itemDescription = rdr.GetString(1);
-        Item newItem = new Item(itemDescription, itemId);
+        string itemRawDate = rdr.GetString(2);
+        Item newItem = new Item(itemDescription, itemRawDate, itemId);
+        newItem.SetDate();
         allItems.Add(newItem);
       }
       conn.Close();
@@ -75,12 +98,18 @@ namespace ToDoList.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO `items` (`description`) VALUES (@ItemDescription);";
+      cmd.CommandText = @"INSERT INTO `items` (`description`, `raw_date`) VALUES (@ItemDescription, @RawDate);";
 
       MySqlParameter description = new MySqlParameter();
       description.ParameterName = "@ItemDescription";
       description.Value = this._description;
+
+      MySqlParameter rawDate = new MySqlParameter();
+      rawDate.ParameterName = "@RawDate";
+      rawDate.Value = this._rawDate;
+
       cmd.Parameters.Add(description);
+      cmd.Parameters.Add(rawDate);
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
@@ -127,14 +156,17 @@ namespace ToDoList.Models
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       int itemId = 0;
       string itemDescription = "";
+      string itemRawDate = "";
 
       while (rdr.Read())
       {
         itemId = rdr.GetInt32(0);
         itemDescription = rdr.GetString(1);
+        itemRawDate = rdr.GetString(2);
       }
 
-      Item foundItem = new Item(itemDescription, itemId);
+      Item foundItem = new Item(itemDescription, itemRawDate, itemId);
+      foundItem.SetDate();
 
       conn.Close();
       if (conn != null)
