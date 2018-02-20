@@ -67,5 +67,22 @@ namespace ToDoList.Tests
       //Assert
       Assert.AreEqual(firstItem, secondItem);
     }
+
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      //arrange
+      Item testItem = new Item("Mow the lawn");
+
+      //act
+      testItem.Save();
+      Item savedItem = Item.GetAll()[0];
+
+      int result = savedItem.GetId();
+      int testId = testItem.GetId();
+
+      //assert
+      Assert.AreEqual(testId, result);
+    }
   }
 }
