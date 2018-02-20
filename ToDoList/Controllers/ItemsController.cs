@@ -27,11 +27,11 @@ namespace ToDoList.Controllers
       return View("Index", allItems);
     }
 
-    // [HttpGet("/items/{id}")]
-    // public ActionResult Detail(int id)
-    // {
-    //   Item item = Item.Find(id - 1);
-    //   return View(item);
-    // }
+    [HttpGet("/items/{id}")]
+    public ActionResult Detail(int id)
+    {
+      Item item = Item.Find(id);
+      return View(item);
+    }
   }
 }
