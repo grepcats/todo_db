@@ -49,10 +49,23 @@ namespace ToDoList.Tests
       Item testItem = new Item("Go to store");
 
       //act
-      int result = Item.GetAll().Count;
+      testItem.Save();
+      List<Item> result = Item.GetAll();
+      List<Item> testList = new List<Item>{testItem};
 
       //assert
-      Assert.AreEqual(0, result);
+      CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
+    public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
+    {
+      //Arrange, act
+      Item firstItem = new Item("Mow the lawn");
+      Item secondItem = new Item("Mow the lawn");
+
+      //Assert
+      Assert.AreEqual(firstItem, secondItem);
     }
   }
 }

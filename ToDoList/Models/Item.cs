@@ -69,10 +69,24 @@ namespace ToDoList.Models
       }
     }
 
-    // public void Save()
-    // {
-    //
-    // }
+    public void Save()
+    {
+
+    }
+
+    public override bool Equals(System.Object otherItem)
+    {
+      if (!(otherItem is Item))
+      {
+        return false;
+      }
+      else
+      {
+        Item newItem = (Item) otherItem;
+        bool descriptionEquality = (this.GetDescription() == newItem.GetDescription());
+        return (descriptionEquality);
+      }
+    }
     // public static void ClearAll()
     // {
     //   _instances.Clear();
