@@ -131,5 +131,26 @@ namespace ToDoList.Tests
       Assert.AreEqual(secondDescription, result);
     }
 
+    [TestMethod]
+    public void Delete_DeleteItemInDatabase_Void()
+    {
+      //Arrange assign item count to an int, add item to db, delete an item from db and check this count against old count.
+      Item testItem1 = new Item("Pet a cat", "2008-01-01", 1);
+      testItem1.Save();
+      List<Item> originalList = Item.GetAll(); // should be 1 item
+      Item testItem2 = new Item("Pet a dog", "2008-01-01", 2);
+      testItem2.Save();
+
+      //act
+      testItem2.Delete();
+      List<Item> newList = Item.GetAll();
+
+      //Assert
+      CollectionAssert.AreEqual(originalList, newList);
+
+
+
+    }
+
   }
 }

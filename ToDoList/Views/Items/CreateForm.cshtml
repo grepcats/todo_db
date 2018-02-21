@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Add a new item</title>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
-  </head>
-  <body>
-    <div class="container">
-      <h1>To Do List</h1>
-      <h3>Add A New Item</h3>
-      <form action="/items" method="post">
-        <div class="form-group">
-          <label for="new-item">Item Description</label>
-          <input type="text" id="new-item" name="new-item" class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="raw-date">Date Due</label>
-          <input type="date" id="raw-date" name="raw-date" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-warning" name="button">Add Item</button>
-      </form>
-    </div>
-  </body>
-</html>
+@{
+  Layout = "_Layout";
+}
+
+<h1>To Do List</h1>
+<h3>Add A New Item</h3>
+<form action="/items" method="post">
+  <div class="form-group">
+    <label for="new-item">Item Description</label>
+    <input type="text" id="new-item" name="new-item" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="raw-date">Date Due</label>
+    <input type="date" id="raw-date" name="raw-date" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-warning" name="button">Add Item</button>
+</form>
