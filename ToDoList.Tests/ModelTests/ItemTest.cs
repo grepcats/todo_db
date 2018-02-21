@@ -114,5 +114,22 @@ namespace ToDoList.Tests
       Assert.AreEqual(result, controlDate);
     }
 
+    [TestMethod]
+    public void Edit_UpdatesItemInDatabase_String()
+    {
+      //arrange
+      string firstDescription = "Walk the Dog";
+      Item testItem = new Item(firstDescription, "2008-01-01", 1);
+      testItem.Save();
+      string secondDescription = "Mow the Lawn";
+
+      //act
+      testItem.Edit(secondDescription);
+      string result = Item.Find(testItem.GetId()).GetDescription();
+
+      //Assert
+      Assert.AreEqual(secondDescription, result);
+    }
+
   }
 }
