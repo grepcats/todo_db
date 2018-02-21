@@ -20,6 +20,30 @@ namespace ToDoList.Models
       return _id;
     }
 
+    public static List<Category> GetAll()
+    {
+      List<Category> allCategories = new List<Category> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM categories;";
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while (rdr.Read())
+      {
+        int categoryId = rdr.GetInt32(1);
+        string categoryName = rdr.GetString(0);
+        Category newCategory = new Category(categoryName, categoryId);
+        allCategories.Add(newCategory);
+      }
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allCategories;
+    }
+
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -66,10 +90,10 @@ namespace ToDoList.Models
       while(rdr.Read())
       {
         int itemId = rdr.GetInt32(0);
-        int itemCategoryId = rdr.GetInt32(1);
-        string itemDescription = rdr.GetString(2);
-        string itemRawDate = rdr.GetString(3);
-        Item newItem = new Item(itemDescription, itemCategoryId, itemRawDate, itemId);
+        string itemDescription = rdr.GetString(1);
+        string itemRawDate = rdr.GetString(2);
+        int itemCategoryId = rdr.GetInt32(4);
+        Item newItem = new Item(itemDescription, itemRawDate, itemId, itemCategoryId);
         allCategoryItems.Add(newItem);
       }
       conn.Close();
@@ -78,6 +102,23 @@ namespace ToDoList.Models
         conn.Dispose();
       }
       return allCategoryItems;
+    }
+
+    public static void DeleteAll()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM categories;";
+
+      cmd.ExecuteNonQuery();
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
   }
 }
