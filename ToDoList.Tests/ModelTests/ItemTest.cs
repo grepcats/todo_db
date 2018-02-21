@@ -11,6 +11,7 @@ namespace ToDoList.Tests
     public void Dispose()
     {
       Item.DeleteAll();
+      // Category.DeleteAll();
     }
 
     public ItemTests()
@@ -23,7 +24,7 @@ namespace ToDoList.Tests
     {
       //arrange
       string controlDesc = "Go to store";
-      Item newItem = new Item("Go to store", "2009-03-29");
+      Item newItem = new Item("Go to store", 1, "2009-03-29");
 
       //act
       string result = newItem.GetDescription();
@@ -46,7 +47,7 @@ namespace ToDoList.Tests
     public void Save_SavesToDatabase_ItemList()
     {
       //arrange
-      Item testItem = new Item("Mow the lawn", "2008-03-02");
+      Item testItem = new Item("Mow the lawn", 1, "2008-03-02");
 
       //act
       testItem.Save();
@@ -61,8 +62,8 @@ namespace ToDoList.Tests
     public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
     {
       //Arrange, act
-      Item firstItem = new Item("Mow the lawn", "2008-03-02");
-      Item secondItem = new Item("Mow the lawn", "2008-03-02");
+      Item firstItem = new Item("Mow the lawn", 1, "2008-03-02");
+      Item secondItem = new Item("Mow the lawn", 1, "2008-03-02");
 
       //Assert
       Assert.AreEqual(firstItem, secondItem);
@@ -72,7 +73,7 @@ namespace ToDoList.Tests
     public void Save_AssignsIdToObject_Id()
     {
       //arrange
-      Item testItem = new Item("Mow the lawn", "2008-03-02");
+      Item testItem = new Item("Mow the lawn", 1, "2008-03-02");
 
       //act
       testItem.Save();
@@ -89,7 +90,7 @@ namespace ToDoList.Tests
     public void Find_FindsItemInDatabase_Item()
     {
       //Arrange
-      Item testItem = new Item("Mow the lawn", "2008-03-02");
+      Item testItem = new Item("Mow the lawn", 1, "2008-03-02");
       testItem.Save();
 
       //act
@@ -103,7 +104,7 @@ namespace ToDoList.Tests
     public void GetFormattedDate_FetchDate_Date()
     {
       //arrange
-      Item testItem = new Item("Mow the lawn", "2008-03-02");
+      Item testItem = new Item("Mow the lawn", 1, "2008-03-02");
       DateTime controlDate = new DateTime(2008, 03, 02);
 
       //act
@@ -119,7 +120,7 @@ namespace ToDoList.Tests
     {
       //arrange
       string firstDescription = "Walk the Dog";
-      Item testItem = new Item(firstDescription, "2008-01-01", 1);
+      Item testItem = new Item(firstDescription, 1, "2008-01-01", 1);
       testItem.Save();
       string secondDescription = "Mow the Lawn";
 
@@ -135,10 +136,10 @@ namespace ToDoList.Tests
     public void Delete_DeleteItemInDatabase_Void()
     {
       //Arrange assign item count to an int, add item to db, delete an item from db and check this count against old count.
-      Item testItem1 = new Item("Pet a cat", "2008-01-01", 1);
+      Item testItem1 = new Item("Pet a cat", 1, "2008-01-01", 1);
       testItem1.Save();
       List<Item> originalList = Item.GetAll(); // should be 1 item
-      Item testItem2 = new Item("Pet a dog", "2008-01-01", 2);
+      Item testItem2 = new Item("Pet a dog", 1, "2008-01-01", 2);
       testItem2.Save();
 
       //act
@@ -147,10 +148,9 @@ namespace ToDoList.Tests
 
       //Assert
       CollectionAssert.AreEqual(originalList, newList);
-
-
-
     }
+
+    //TODO write a test to make sure category ID is getting saved.
 
   }
 }

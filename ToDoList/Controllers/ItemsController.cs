@@ -21,7 +21,7 @@ namespace ToDoList.Controllers
     [HttpPost("/items")]
     public ActionResult Create()
     {
-      Item newItem = new Item(Request.Form["new-item"], Request.Form["raw-date"]);
+      Item newItem = new Item(Request.Form["new-item"], 1, Request.Form["raw-date"]);
       newItem.Save();
       List<Item> allItems = Item.GetAll();
       return View("Index", allItems);

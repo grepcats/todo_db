@@ -8,15 +8,18 @@ namespace ToDoList.Models
   {
     private string _description;
     private int _id;
+    private int _categoryId;
     private string _rawDate;
     private DateTime _formattedDate;
 
-    public Item (string description, string rawDate, int Id = 0)
+    public Item (string description, int categoryId, string rawDate, int Id = 0)
     {
       _description = description;
+      _categoryId = categoryId;
       _id = Id;
       _rawDate = rawDate;
       _formattedDate = new DateTime();
+
     }
 
     public DateTime GetFormattedDate()
@@ -50,6 +53,11 @@ namespace ToDoList.Models
       return _id;
     }
 
+    public int GetCategoryId()
+    {
+      return _categoryId;
+    }
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> {};
@@ -61,9 +69,10 @@ namespace ToDoList.Models
       while(rdr.Read())
       {
         int itemId = rdr.GetInt32(0);
+        int categoryId = rdr.GetInt32(4);
         string itemDescription = rdr.GetString(1);
         string itemRawDate = rdr.GetString(2);
-        Item newItem = new Item(itemDescription, itemRawDate, itemId);
+        Item newItem = new Item(itemDescription, categoryId, itemRawDate, itemId);
         newItem.SetDate();
         allItems.Add(newItem);
       }
@@ -99,11 +108,15 @@ namespace ToDoList.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO `items` (`description`, `raw_date`, `formatted_date`) VALUES (@ItemDescription, @RawDate, @FormattedDate);";
+      cmd.CommandText = @"INSERT INTO `items` (`description`, `category_id`,  `raw_date`, `formatted_date`) VALUES (@ItemDescription, @CategoryId, @RawDate, @FormattedDate);";
 
       MySqlParameter description = new MySqlParameter();
       description.ParameterName = "@ItemDescription";
       description.Value = this._description;
+
+      MySqlParameter categoryId = new MySqlParameter();
+      categoryId.ParameterName = "@CategoryId";
+      categoryId.Value = this._categoryId;
 
       MySqlParameter rawDate = new MySqlParameter();
       rawDate.ParameterName = "@RawDate";
@@ -114,6 +127,7 @@ namespace ToDoList.Models
       formattedDate.Value = this._formattedDate;
 
       cmd.Parameters.Add(description);
+      cmd.Parameters.Add(categoryId);
       cmd.Parameters.Add(rawDate);
       cmd.Parameters.Add(formattedDate);
 
@@ -138,7 +152,8 @@ namespace ToDoList.Models
         Item newItem = (Item) otherItem;
         bool idEquality = (this.GetId() == newItem.GetId());
         bool descriptionEquality = (this.GetDescription() == newItem.GetDescription());
-        return (idEquality && descriptionEquality);
+        bool categoryEquality = (this.GetCategoryId() == newItem.GetCategoryId());
+        return (idEquality && descriptionEquality && categoryEquality);
       }
     }
     // public static void ClearAll()
@@ -163,15 +178,17 @@ namespace ToDoList.Models
       int itemId = 0;
       string itemDescription = "";
       string itemRawDate = "";
+      int itemCategoryId = 0;
 
       while (rdr.Read())
       {
         itemId = rdr.GetInt32(0);
+        itemCategoryId = rdr.GetInt32(4);
         itemDescription = rdr.GetString(1);
         itemRawDate = rdr.GetString(2);
       }
 
-      Item foundItem = new Item(itemDescription, itemRawDate, itemId);
+      Item foundItem = new Item(itemDescription, itemCategoryId, itemRawDate, itemId);
       foundItem.SetDate();
 
       conn.Close();
@@ -229,6 +246,7 @@ namespace ToDoList.Models
         conn.Dispose();
       }
     }
+
 
   }
 }
