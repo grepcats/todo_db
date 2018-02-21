@@ -20,6 +20,11 @@ namespace ToDoList.Models
       return _id;
     }
 
+    public string GetName()
+    {
+      return _name;
+    }
+
     public static List<Category> GetAll()
     {
       List<Category> allCategories = new List<Category> {};
@@ -42,6 +47,21 @@ namespace ToDoList.Models
         conn.Dispose();
       }
       return allCategories;
+    }
+
+    public override bool Equals(System.Object otherCategory)
+    {
+      if (!(otherCategory is Category))
+      {
+        return false;
+      }
+      else
+      {
+        Category newCategory = (Category) otherCategory;
+        bool idEquality = (this.GetId() == newCategory.GetId());
+        bool nameEquality = (this.GetName() == newCategory.GetName());
+        return (idEquality && nameEquality);
+      }
     }
 
     public void Save()
@@ -79,7 +99,7 @@ namespace ToDoList.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM items WHERE category_id = @category_id;";
+      cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = @category_id;";
 
       MySqlParameter categoryId = new MySqlParameter();
       categoryId.ParameterName = "@category_id";
@@ -101,6 +121,7 @@ namespace ToDoList.Models
       {
         conn.Dispose();
       }
+
       return allCategoryItems;
     }
 

@@ -5,6 +5,7 @@ using System;
 
 namespace ToDoList.Tests
 {
+  [TestClass]
   public class CategoryTests : IDisposable
   {
     public void Dispose()
@@ -21,12 +22,12 @@ namespace ToDoList.Tests
     [TestMethod]
     public void GetItems_RetrievesAllItemsWithCategoryId_ItemList()
     {
-      Category testCategory = new Category("Household Chores");
+      Category testCategory = new Category("Household Chores", 1);
       testCategory.Save();
 
-      Item firstItem = new Item("Mow the lawn", "2008-01-01", testCategory.GetId());
+      Item firstItem = new Item("Mow the lawn", "2008-01-01", 1, testCategory.GetId());
       firstItem.Save();
-      Item secondItem = new Item("Do the dishes", "2008-01-01", testCategory.GetId());
+      Item secondItem = new Item("Do the dishes", "2008-01-01", 2,  testCategory.GetId());
       secondItem.Save();
 
       List<Item> testItemList = new List<Item> {firstItem, secondItem};
@@ -69,6 +70,23 @@ namespace ToDoList.Tests
 
       //assert
       CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
+    public void Save_DatabaseAssignsIdToCategory_Id()
+    {
+      //arrange
+      Category testCategory = new Category("Household Chores");
+      testCategory.Save();
+
+      //act
+      Category savedCategory = Category.GetAll()[0];
+
+      int result = savedCategory.GetId();
+      int testId = testCategory.GetId();
+
+      //assert
+      Assert.AreEqual(testId, result);
     }
   }
 }
