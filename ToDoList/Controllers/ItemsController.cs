@@ -48,5 +48,13 @@ namespace ToDoList.Controllers
       thisItem.Edit(Request.Form["newname"]);
       return RedirectToAction("Index");
     }
+
+    [HttpGet("/items/{id}/delete")]
+    public ActionResult Delete(int id)
+    {
+      Item thisItem = Item.Find(id);
+      thisItem.Delete();
+      return RedirectToAction("Index");
+    }
   }
 }
