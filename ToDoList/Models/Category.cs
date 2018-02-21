@@ -141,5 +141,39 @@ namespace ToDoList.Models
         conn.Dispose();
       }
     }
+
+    public static Category Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * from `categories` WHERE id = @thisId;";
+
+      MySqlParameter thisId = new MySqlParameter();
+      thisId.ParameterName = "@thisId";
+      thisId.Value = id;
+      cmd.Parameters.Add(thisId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int categoryId = 0;
+      string categoryName = "";
+
+      while (rdr.Read())
+      {
+        categoryId = rdr.GetInt32(1);
+        categoryName = rdr.GetString(0);
+      }
+
+      Category foundCategory = new Category(categoryName, categoryId);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
+      return foundCategory;
+    }
   }
 }

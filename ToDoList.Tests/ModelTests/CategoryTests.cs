@@ -88,5 +88,19 @@ namespace ToDoList.Tests
       //assert
       Assert.AreEqual(testId, result);
     }
+
+    [TestMethod]
+    public void Find_FindsCategoryInDatabase_Category()
+    {
+      //arrange
+      Category testCategory = new Category("Household Chores");
+      testCategory.Save();
+
+      //act
+      Category foundCategory = Category.Find(testCategory.GetId());
+
+      //assert
+      Assert.AreEqual(testCategory, foundCategory);
+    }
   }
 }
