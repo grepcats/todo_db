@@ -61,7 +61,7 @@ namespace ToDoList.Controllers
       return RedirectToAction("Index");
     }
 
-    [HttpPost("/categories/{id}/items/sort-asc")]
+    [HttpGet("/categories/{id}/items/sort-asc")]
     public ActionResult SortAsc(int id)
     {
       Category sortCat = Category.Find(id);
@@ -73,7 +73,7 @@ namespace ToDoList.Controllers
       return View("Detail", model);
     }
 
-    [HttpPost("/categories/{id}/items/sort-desc")]
+    [HttpGet("/categories/{id}/items/sort-desc")]
     public ActionResult SortDesc(int id)
     {
       Category sortCat = Category.Find(id);

@@ -3,12 +3,16 @@
 }
 
 <h1>@Model["category"].GetName()</h1>
-<form method="post" action='/categories/@Model["category"].GetId()/items/sort-desc'>
+<!-- <form method="post" action='/categories/@Model["category"].GetId()/items/sort-desc'>
   <button type="submit" name="DESC" class="btn btn-default">Sort Descending</button>
 </form>
 <form method="post" action='/categories/@Model["category"].GetId()/items/sort-asc'>
   <button type="submit" name="ASC" class="btn btn-default">Sort Ascending</button>
-</form>
+</form> -->
+
+<button class="btn btn-default"><a href='/categories/@Model["category"].GetId()/items/sort-desc'>Sort Descending</a></button>
+<button class="btn btn-default"><a href='/categories/@Model["category"].GetId()/items/sort-asc'>Sort Ascending</a></button>
+
 @foreach (var item in @Model["items"])
 {
   string display = "";
