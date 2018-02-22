@@ -34,7 +34,7 @@ namespace ToDoList.Controllers
     public ActionResult UpdateItem(int id)
     {
       Item thisItem = Item.Find(id);
-      thisItem.Edit(Request.Form["newname"]);
+      thisItem.Edit(Request.Form["newname"], Request.Form["newdate"]);
       return RedirectToAction("Detail", "categories", new {Id = thisItem.GetCategoryId()});
     }
 

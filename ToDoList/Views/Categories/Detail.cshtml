@@ -4,12 +4,12 @@
 
 <h1>@Model["category"].GetName()</h1>
 <form method="post" action='/categories/@Model["category"].GetId()/items/sort'>
-  <button type="submit" name="selection" value="ASC">Sort Ascending</button>
-  <button type="submit" name="selection" value="DESC">Sort Descending</button>
+  <button type="submit" name="selection" value="ASC" class="btn btn-default">Sort Ascending</button>
+  <button type="submit" name="selection" value="DESC" class="btn btn-default">Sort Descending</button>
 </form>
 @foreach (var item in @Model["items"])
 {
-  <h4>@item.GetDescription() | Due @item.GetFormattedDate() | <a href="/items/@item.GetId()/update">Edit</a> | <a href="/items/@item.GetId()/delete">Delete</a></h4>
+  <h4>@item.GetDescription() | Due @item.GetFormattedDate().ToShortDateString() | <a href="/items/@item.GetId()/update">Edit</a> | <a href="/items/@item.GetId()/delete">Delete</a></h4>
 }
 <p><a href='/categories/@Model["category"].GetId()/items/new'>Add a new item</a></p>
 <p><a href="/">Return Home</a></p>

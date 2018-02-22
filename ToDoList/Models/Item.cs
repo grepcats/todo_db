@@ -26,6 +26,11 @@ namespace ToDoList.Models
       return _formattedDate;
     }
 
+    public string GetRawDate()
+    {
+      return _rawDate;
+    }
+
     public void SetDate()
     {
       string[] dateArray = _rawDate.Split('-');
@@ -204,12 +209,12 @@ namespace ToDoList.Models
       return foundItem;
     }
 
-    public void Edit(string newDescription)
+    public void Edit(string newDescription, string newDate)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE items SET description = @newDescription WHERE id = @searchId;";
+      cmd.CommandText = @"UPDATE items SET description = @newDescription, raw_date = @newDate WHERE id = @searchId;";
 
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
@@ -220,6 +225,11 @@ namespace ToDoList.Models
       description.ParameterName = "@newDescription";
       description.Value = newDescription;
       cmd.Parameters.Add(description);
+
+      MySqlParameter date = new MySqlParameter();
+      date.ParameterName = "@newDate";
+      date.Value = newDate;
+      cmd.Parameters.Add(date);
 
       cmd.ExecuteNonQuery();
       _description = newDescription;
