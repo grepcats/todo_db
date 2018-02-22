@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Models;
+using System;
 
 namespace ToDoList.Controllers
 {
@@ -10,7 +11,6 @@ namespace ToDoList.Controllers
     [HttpGet("/categories/{categoryID}/items/new")]
     public ActionResult CreateItemForm(int categoryId)
     {
-      //Dictionary<string, object> model = new Dictionary<string, object>();
       Category foundCategory = Category.Find(categoryId);
       return View(foundCategory);
 
@@ -52,20 +52,19 @@ namespace ToDoList.Controllers
     }
 
     [HttpPost("/items/{id}/update")]
-    public ActionResult Update(int id)
+    public ActionResult UpdateItem(int id)
     {
       Item thisItem = Item.Find(id);
       thisItem.Edit(Request.Form["newname"]);
-      return RedirectToAction("Detail", "categories");
+      return RedirectToAction("Detail", "categories", new {Id = thisItem.GetCategoryId()});
     }
-
 
     [HttpGet("/items/{id}/delete")]
     public ActionResult Delete(int id)
     {
       Item thisItem = Item.Find(id);
       thisItem.Delete();
-      return RedirectToAction("ItemIndex");
+      return RedirectToAction("Detail", "categories");
     }
   }
 }
