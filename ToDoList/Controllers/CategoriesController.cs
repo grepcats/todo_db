@@ -60,5 +60,25 @@ namespace ToDoList.Controllers
       thisCategory.Delete();
       return RedirectToAction("Index");
     }
+
+    [HttpPost("/categories/{id}/items/sort")]
+    public ActionResult Sort(int id)
+    {
+      Category sortCat = Category.Find(id);
+      List<Item> sortedItems = new List<Item>{};
+      if(Request.Form["selection"].Equals("ASC"))
+      {
+        sortedItems = sortCat.Sort("ASC");
+      }
+      else if(Request.Form["selection"].Equals("DESC"))
+      {
+        sortedItems = sortCat.Sort("DESC");
+      }
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      model.Add("category", sortCat);
+      model.Add("items", sortedItems);
+      return View("Detail", model);
+
+    }
   }
 }

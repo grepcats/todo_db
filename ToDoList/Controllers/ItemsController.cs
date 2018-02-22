@@ -13,36 +13,15 @@ namespace ToDoList.Controllers
     {
       Category foundCategory = Category.Find(categoryId);
       return View(foundCategory);
-
-    }
-    [Route("/items")]
-    public ActionResult ItemIndex()
-    {
-      return View("/Items/Index", Item.GetAll());
     }
 
-    [HttpGet("/items/new")]
-    public ActionResult CreateForm()
-    {
-      return View();
-    }
-
-    [HttpPost("/items")]
-    public ActionResult Create()
-    {
-      Item newItem = new Item(Request.Form["new-item"], Request.Form["raw-date"]);
-      newItem.Save();
-      List<Item> allItems = Item.GetAll();
-      return View("Index", allItems);
-    }
-
+//not currently used
     [HttpGet("/items/{id}")]
     public ActionResult Detail(int id)
     {
       Item item = Item.Find(id);
       return View(item);
     }
-
 
     [HttpGet("/items/{id}/update")]
     public ActionResult UpdateForm(int id)
