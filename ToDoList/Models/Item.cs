@@ -19,7 +19,6 @@ namespace ToDoList.Models
       _id = Id;
       _rawDate = rawDate;
       _formattedDate = new DateTime();
-
     }
 
     public DateTime GetFormattedDate()

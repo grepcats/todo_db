@@ -60,7 +60,7 @@ namespace ToDoList.Controllers
     }
 
     [HttpGet("/items/{id}/delete")]
-    public ActionResult Delete(int id)
+    public ActionResult DeleteItem(int id)
     {
       Item thisItem = Item.Find(id);
       //int catId = thisItem.GetCategoryId();
