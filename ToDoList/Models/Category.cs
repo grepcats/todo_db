@@ -201,13 +201,40 @@ namespace ToDoList.Models
       return foundCategory;
     }
 
-    public List<Item> Sort(string direction)
+    public List<Item> SortAsc()
     {
       List<Item> sortedList = new List<Item>{};
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = " + this.GetId() + " ORDER BY `formatted_date` " + direction + ";";
+        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = " + this.GetId() + " ORDER BY -`formatted_date` DESC;";
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while (rdr.Read())
+      {
+        int itemId = rdr.GetInt32(0);
+        string itemDescription = rdr.GetString(1);
+        string itemRawDate = rdr.GetString(2);
+        int categoryId = rdr.GetInt32(4);
+
+        Item newItem = new Item(itemDescription, itemRawDate, itemId, categoryId);
+        newItem.SetDate();
+        sortedList.Add(newItem);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return sortedList;
+    }
+
+    public List<Item> SortDesc()
+    {
+      List<Item> sortedList = new List<Item>{};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = " + this.GetId() + " ORDER BY `formatted_date` DESC;";
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       while (rdr.Read())
       {

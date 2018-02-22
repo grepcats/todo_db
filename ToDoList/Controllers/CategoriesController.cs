@@ -61,24 +61,28 @@ namespace ToDoList.Controllers
       return RedirectToAction("Index");
     }
 
-    [HttpPost("/categories/{id}/items/sort")]
-    public ActionResult Sort(int id)
+    [HttpPost("/categories/{id}/items/sort-asc")]
+    public ActionResult SortAsc(int id)
     {
       Category sortCat = Category.Find(id);
       List<Item> sortedItems = new List<Item>{};
-      if(Request.Form["selection"].Equals("ASC"))
-      {
-        sortedItems = sortCat.Sort("ASC");
-      }
-      else if(Request.Form["selection"].Equals("DESC"))
-      {
-        sortedItems = sortCat.Sort("DESC");
-      }
+      sortedItems = sortCat.SortAsc();
       Dictionary<string, object> model = new Dictionary<string, object>();
       model.Add("category", sortCat);
       model.Add("items", sortedItems);
       return View("Detail", model);
+    }
 
+    [HttpPost("/categories/{id}/items/sort-desc")]
+    public ActionResult SortDesc(int id)
+    {
+      Category sortCat = Category.Find(id);
+      List<Item> sortedItems = new List<Item>{};
+      sortedItems = sortCat.SortDesc();
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      model.Add("category", sortCat);
+      model.Add("items", sortedItems);
+      return View("Detail", model);
     }
   }
 }

@@ -10,7 +10,7 @@ namespace ToDoList.Models
     private int _id;
     private int _categoryId;
     private string _rawDate;
-    private DateTime _formattedDate;
+    private DateTime? _formattedDate;
 
     public Item (string description, string rawDate, int Id = 0, int categoryId = 0)
     {
@@ -21,7 +21,7 @@ namespace ToDoList.Models
       _formattedDate = new DateTime();
     }
 
-    public DateTime GetFormattedDate()
+    public DateTime? GetFormattedDate()
     {
       return _formattedDate;
     }
@@ -33,13 +33,21 @@ namespace ToDoList.Models
 
     public void SetDate()
     {
-      string[] dateArray = _rawDate.Split('-');
-      List<int> intDateList = new List<int>{};
-      foreach (string num in dateArray)
+      if (_rawDate != null && _rawDate != "")
       {
-        intDateList.Add(Int32.Parse(num));
+        string[] dateArray = _rawDate.Split('-');
+        List<int> intDateList = new List<int>{};
+        foreach (string num in dateArray)
+        {
+          intDateList.Add(Int32.Parse(num));
+        }
+        _formattedDate = new DateTime(intDateList[0], intDateList[1], intDateList[2]);
       }
-      _formattedDate = new DateTime(intDateList[0], intDateList[1], intDateList[2]);
+      else
+      {
+        _formattedDate = null;
+      }
+
     }
 
     public string GetDescription()
