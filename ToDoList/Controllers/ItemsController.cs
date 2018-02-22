@@ -6,6 +6,15 @@ namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
+
+    [HttpGet("/categories/{categoryID}/items/new")]
+    public ActionResult CreateItemForm(int categoryId)
+    {
+      //Dictionary<string, object> model = new Dictionary<string, object>();
+      Category foundCategory = Category.Find(categoryId);
+      return View(foundCategory);
+
+    }
     [Route("/items")]
     public ActionResult ItemIndex()
     {

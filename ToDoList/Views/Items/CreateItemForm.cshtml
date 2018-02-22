@@ -3,8 +3,8 @@
 }
 
 <h1>To Do List</h1>
-<h3>Add A New Item</h3>
-<form action="/items" method="post">
+<h3>Add A New Item to @Model.GetName()</h3>
+<form action="/categories/@Model.GetId()/items" method="post">
   <div class="form-group">
     <label for="new-item">Item Description</label>
     <input type="text" id="new-item" name="new-item" class="form-control">

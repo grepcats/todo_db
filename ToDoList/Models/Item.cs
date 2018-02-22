@@ -58,6 +58,11 @@ namespace ToDoList.Models
       return _categoryId;
     }
 
+    public void SetCatId(int id)
+    {
+      _categoryId = id;
+    }
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> {};
