@@ -6,10 +6,10 @@ namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
-    [Route("/")]
-    public ActionResult Index()
+    [Route("/items")]
+    public ActionResult ItemIndex()
     {
-      return View("Index", Item.GetAll());
+      return View("/Items/Index", Item.GetAll());
     }
 
     [HttpGet("/items/new")]
@@ -46,7 +46,7 @@ namespace ToDoList.Controllers
     {
       Item thisItem = Item.Find(id);
       thisItem.Edit(Request.Form["newname"]);
-      return RedirectToAction("Index");
+      return RedirectToAction("ItemIndex");
     }
 
     [HttpGet("/items/{id}/delete")]
@@ -54,7 +54,7 @@ namespace ToDoList.Controllers
     {
       Item thisItem = Item.Find(id);
       thisItem.Delete();
-      return RedirectToAction("Index");
+      return RedirectToAction("ItemIndex");
     }
   }
 }

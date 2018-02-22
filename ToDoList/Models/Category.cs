@@ -58,9 +58,7 @@ namespace ToDoList.Models
       else
       {
         Category newCategory = (Category) otherCategory;
-        bool idEquality = (this.GetId() == newCategory.GetId());
-        bool nameEquality = (this.GetName() == newCategory.GetName());
-        return (idEquality && nameEquality);
+        return this.GetId().Equals(newCategory.GetId());
       }
     }
 
