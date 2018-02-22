@@ -147,12 +147,18 @@ namespace ToDoList.Models
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"DELETE FROM categories WHERE id = @thisId;";
 
+      var cmdItems = conn.CreateCommand() as MySqlCommand;
+      cmdItems.CommandText = @"DELETE FROM items WHERE category_id = @thisId;";
+
       MySqlParameter thisId = new MySqlParameter();
       thisId.ParameterName = "@thisId";
       thisId.Value = _id;
       cmd.Parameters.Add(thisId);
+      cmdItems.Parameters.Add(thisId);
 
+      cmdItems.ExecuteNonQuery();
       cmd.ExecuteNonQuery();
+
       conn.Close();
       if (conn != null)
       {

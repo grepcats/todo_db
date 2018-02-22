@@ -119,7 +119,34 @@ namespace ToDoList.Tests
 
       //assert
       CollectionAssert.AreEqual(originalList, newList);
+    }
 
+    [TestMethod]
+    public void Delete_DeleteCategoryANDItemsFromDB_Void()
+    {
+      //arrange
+      Category testCategory1 = new Category("Dog Stuff", 1);
+      testCategory1.Save();
+      Item testItem1 = new Item("Pet dog", "2008-01-01", 1, 1);
+      Item testItem2 = new Item("Walk dog", "2008-01-01", 2, 1);
+      testItem1.Save();
+      testItem2.Save();
+
+      Category testCategory2 = new Category("Cat Stuff", 2);
+      testCategory2.Save();
+      Item testItem3 = new Item("Pet cat", "2008-01-01", 3, 2);
+      Item testItem4 = new Item("Walk cat", "2008-01-01", 4, 2);
+      testItem3.Save();
+      testItem4.Save();
+
+      int numExistingItemsControl = 2;
+
+      //act
+      testCategory1.Delete();
+      int result = Item.GetAll().Count;
+
+      //assert
+      Assert.AreEqual(numExistingItemsControl, result);
     }
   }
 }
