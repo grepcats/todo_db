@@ -102,5 +102,24 @@ namespace ToDoList.Tests
       //assert
       Assert.AreEqual(testCategory, foundCategory);
     }
+
+    [TestMethod]
+    public void Delete_DeleteCategoryFromDatabase_Void()
+    {
+      //arrange
+      Category testCategory1 = new Category("Dog Stuff");
+      testCategory1.Save();
+      List<Category> originalList = Category.GetAll(); //should be 1 item
+      Category testCategory2 = new Category("Cat Stuff");
+      testCategory2.Save();
+
+      //act
+      testCategory2.Delete();
+      List<Category> newList = Category.GetAll(); //should be 1 item after deleting testCategory2
+
+      //assert
+      CollectionAssert.AreEqual(originalList, newList);
+
+    }
   }
 }
