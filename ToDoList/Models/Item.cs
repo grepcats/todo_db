@@ -136,8 +136,6 @@ namespace ToDoList.Models
       cmd.Parameters.Add(formattedDate);
       cmd.Parameters.Add(categoryId);
 
-      System.Console.WriteLine("description is " + _description + " and cat id is " + _categoryId);
-
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
 

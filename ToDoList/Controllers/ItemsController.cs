@@ -43,6 +43,7 @@ namespace ToDoList.Controllers
       return View(item);
     }
 
+
     [HttpGet("/items/{id}/update")]
     public ActionResult UpdateForm(int id)
     {
@@ -55,8 +56,9 @@ namespace ToDoList.Controllers
     {
       Item thisItem = Item.Find(id);
       thisItem.Edit(Request.Form["newname"]);
-      return RedirectToAction("ItemIndex");
+      return RedirectToAction("Detail", "categories");
     }
+
 
     [HttpGet("/items/{id}/delete")]
     public ActionResult Delete(int id)

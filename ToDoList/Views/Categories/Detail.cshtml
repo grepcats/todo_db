@@ -5,7 +5,7 @@
 <h1>@Model["category"].GetName()</h1>
 @foreach (var item in @Model["items"])
 {
-  <p>@item.GetDescription() | Due @item.GetFormattedDate()</p>
+  <h4>@item.GetDescription() | Due @item.GetFormattedDate() | <a href="/items/@item.GetId()/update">Edit</a> | <a href="/items/@item.GetId()/delete">Delete</a></h4>
 }
 <p><a href='/categories/@Model["category"].GetId()/items/new'>Add a new item</a></p>
 <p><a href="/">Return Home</a></p>
