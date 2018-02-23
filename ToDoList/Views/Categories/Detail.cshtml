@@ -3,29 +3,36 @@
 }
 
 <h1>@Model["category"].GetName()</h1>
-<!-- <form method="post" action='/categories/@Model["category"].GetId()/items/sort-desc'>
-  <button type="submit" name="DESC" class="btn btn-default">Sort Descending</button>
-</form>
-<form method="post" action='/categories/@Model["category"].GetId()/items/sort-asc'>
-  <button type="submit" name="ASC" class="btn btn-default">Sort Ascending</button>
-</form> -->
-
-<button class="btn btn-default"><a href='/categories/@Model["category"].GetId()/items/sort-desc'>Sort Descending</a></button>
-<button class="btn btn-default"><a href='/categories/@Model["category"].GetId()/items/sort-asc'>Sort Ascending</a></button>
-
-@foreach (var item in @Model["items"])
-{
-  string display = "";
-  if (@item.GetFormattedDate() != null)
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Due Date <a href='/categories/@Model["category"].GetId()/items/sort-desc'>&#9660;</a> <a href='/categories/@Model["category"].GetId()/items/sort-asc'>&#9650;</a></th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var item in @Model["items"])
   {
-    display = @item.GetFormattedDate().ToShortDateString();
+    string display = "";
+    if (@item.GetFormattedDate() != null)
+    {
+      display = @item.GetFormattedDate().ToShortDateString();
+    }
+    else
+    {
+      display = "never!";
+    }
+    <tr>
+      <td>@item.GetDescription()</td>
+      <td>Due @display</td>
+      <td><a href="/items/@item.GetId()/update"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+      <td><a href="/items/@item.GetId()/delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+    </tr>
   }
-  else
-  {
-    display = "never!";
-  }
+  </tbody>
+</table>
 
-  <h4>@item.GetDescription() | Due @display | <a href="/items/@item.GetId()/update">Edit</a> | <a href="/items/@item.GetId()/delete">Delete</a></h4>
-}
 <p><a href='/categories/@Model["category"].GetId()/items/new'>Add a new item</a></p>
 <p><a href="/">Return Home</a></p>

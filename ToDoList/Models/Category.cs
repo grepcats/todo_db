@@ -207,7 +207,13 @@ namespace ToDoList.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = " + this.GetId() + " ORDER BY -`formatted_date` DESC;";
+        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = @thisId ORDER BY -`formatted_date` DESC;";
+
+      MySqlParameter thisId = new MySqlParameter();
+      thisId.ParameterName = "@thisId";
+      thisId.Value = this.GetId();
+      cmd.Parameters.Add(thisId);
+
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       while (rdr.Read())
       {
@@ -234,7 +240,13 @@ namespace ToDoList.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = " + this.GetId() + " ORDER BY `formatted_date` DESC;";
+        cmd.CommandText = @"SELECT * FROM `items` WHERE `category_id` = @thisId ORDER BY `formatted_date` DESC;";
+
+      MySqlParameter thisId = new MySqlParameter();
+      thisId.ParameterName = "@thisId";
+      thisId.Value = this.GetId();
+      cmd.Parameters.Add(thisId);
+
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       while (rdr.Read())
       {

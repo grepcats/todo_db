@@ -3,8 +3,23 @@
 }
 
 <h1>To Do List</h1>
-@foreach (var category in Model)
-{
-  <h4>@category.GetName() | <a href="/categories/@category.GetId()">View</a> | <a href="/categories/@category.GetId()/delete">Delete</a></h4>
-}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Category Name</th>
+      <th>View Items</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var category in Model)
+  {
+    <tr>
+      <td>@category.GetName()</td>
+      <td><a href="/categories/@category.GetId()"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
+      <td><a href="/categories/@category.GetId()/delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+    </tr>
+  }
+  </tbody>
+</table>
 <a href="/categories/new">Add New Category</a>
