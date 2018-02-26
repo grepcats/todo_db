@@ -38,20 +38,20 @@ namespace ToDoList.Controllers
       return View(model);
     }
 
-    [HttpPost("/categories/{id}/items")]
-    public ActionResult CreateItem(int id)
-    {
-        Dictionary<string, object> model = new Dictionary<string, object>();
-        Category foundCategory = Category.Find(id);
-        List<Item> categoryItems = foundCategory.GetItems();
-        Item newItem = new Item(Request.Form["new-item"], Request.Form["raw-date"]);
-        newItem.SetCatId(foundCategory.GetId());
-        categoryItems.Add(newItem);
-        newItem.Save();
-        model.Add("items", categoryItems);
-        model.Add("category", foundCategory);
-        return View("Detail", model);
-    }
+    // [HttpPost("/categories/{id}/items")]
+    // public ActionResult CreateItem(int id)
+    // {
+    //     Dictionary<string, object> model = new Dictionary<string, object>();
+    //     Category foundCategory = Category.Find(id);
+    //     List<Item> categoryItems = foundCategory.GetItems();
+    //     Item newItem = new Item(Request.Form["new-item"], Request.Form["raw-date"]);
+    //     newItem.SetCatId(foundCategory.GetId());
+    //     categoryItems.Add(newItem);
+    //     newItem.Save();
+    //     model.Add("items", categoryItems);
+    //     model.Add("category", foundCategory);
+    //     return View("Detail", model);
+    // }
 
     [HttpGet("/categories/{id}/delete")]
     public ActionResult DeleteCategory(int id)

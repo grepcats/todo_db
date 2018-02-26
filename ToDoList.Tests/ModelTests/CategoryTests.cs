@@ -19,22 +19,22 @@ namespace ToDoList.Tests
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo_test;";
     }
 
-    [TestMethod]
-    public void GetItems_RetrievesAllItemsWithCategoryId_ItemList()
-    {
-      Category testCategory = new Category("Household Chores", 1);
-      testCategory.Save();
-
-      Item firstItem = new Item("Mow the lawn", "2008-01-01", 1, testCategory.GetId());
-      firstItem.Save();
-      Item secondItem = new Item("Do the dishes", "2008-01-01", 2,  testCategory.GetId());
-      secondItem.Save();
-
-      List<Item> testItemList = new List<Item> {firstItem, secondItem};
-      List<Item> resultItemList = testCategory.GetItems();
-
-      CollectionAssert.AreEqual(testItemList, resultItemList);
-    }
+    // [TestMethod]
+    // public void GetItems_RetrievesAllItemsWithCategoryId_ItemList()
+    // {
+    //   Category testCategory = new Category("Household Chores", 1);
+    //   testCategory.Save();
+    //
+    //   Item firstItem = new Item("Mow the lawn", "2008-01-01", 1, testCategory.GetId());
+    //   firstItem.Save();
+    //   Item secondItem = new Item("Do the dishes", "2008-01-01", 2,  testCategory.GetId());
+    //   secondItem.Save();
+    //
+    //   List<Item> testItemList = new List<Item> {firstItem, secondItem};
+    //   List<Item> resultItemList = testCategory.GetItems();
+    //
+    //   CollectionAssert.AreEqual(testItemList, resultItemList);
+    // }
 
     [TestMethod]
     public void GetAll_CategoriesEmptyAtFirst_0()
@@ -103,50 +103,50 @@ namespace ToDoList.Tests
       Assert.AreEqual(testCategory, foundCategory);
     }
 
-    [TestMethod]
-    public void Delete_DeleteCategoryFromDatabase_Void()
-    {
-      //arrange
-      Category testCategory1 = new Category("Dog Stuff");
-      testCategory1.Save();
-      List<Category> originalList = Category.GetAll(); //should be 1 item
-      Category testCategory2 = new Category("Cat Stuff");
-      testCategory2.Save();
+    // [TestMethod]
+    // public void Delete_DeleteCategoryFromDatabase_Void()
+    // {
+    //   //arrange
+    //   Category testCategory1 = new Category("Dog Stuff");
+    //   testCategory1.Save();
+    //   List<Category> originalList = Category.GetAll(); //should be 1 item
+    //   Category testCategory2 = new Category("Cat Stuff");
+    //   testCategory2.Save();
+    //
+    //   //act
+    //   testCategory2.Delete();
+    //   List<Category> newList = Category.GetAll(); //should be 1 item after deleting testCategory2
+    //
+    //   //assert
+    //   CollectionAssert.AreEqual(originalList, newList);
+    // }
 
-      //act
-      testCategory2.Delete();
-      List<Category> newList = Category.GetAll(); //should be 1 item after deleting testCategory2
-
-      //assert
-      CollectionAssert.AreEqual(originalList, newList);
-    }
-
-    [TestMethod]
-    public void Delete_DeleteCategoryANDItemsFromDB_Void()
-    {
-      //arrange
-      Category testCategory1 = new Category("Dog Stuff", 1);
-      testCategory1.Save();
-      Item testItem1 = new Item("Pet dog", "2008-01-01", 1, 1);
-      Item testItem2 = new Item("Walk dog", "2008-01-01", 2, 1);
-      testItem1.Save();
-      testItem2.Save();
-
-      Category testCategory2 = new Category("Cat Stuff", 2);
-      testCategory2.Save();
-      Item testItem3 = new Item("Pet cat", "2008-01-01", 3, 2);
-      Item testItem4 = new Item("Walk cat", "2008-01-01", 4, 2);
-      testItem3.Save();
-      testItem4.Save();
-
-      int numExistingItemsControl = 2;
-
-      //act
-      testCategory1.Delete();
-      int result = Item.GetAll().Count;
-
-      //assert
-      Assert.AreEqual(numExistingItemsControl, result);
-    }
+    // [TestMethod]
+    // public void Delete_DeleteCategoryANDItemsFromDB_Void()
+    // {
+    //   //arrange
+    //   Category testCategory1 = new Category("Dog Stuff", 1);
+    //   testCategory1.Save();
+    //   Item testItem1 = new Item("Pet dog", "2008-01-01", 1, 1);
+    //   Item testItem2 = new Item("Walk dog", "2008-01-01", 2, 1);
+    //   testItem1.Save();
+    //   testItem2.Save();
+    //
+    //   Category testCategory2 = new Category("Cat Stuff", 2);
+    //   testCategory2.Save();
+    //   Item testItem3 = new Item("Pet cat", "2008-01-01", 3, 2);
+    //   Item testItem4 = new Item("Walk cat", "2008-01-01", 4, 2);
+    //   testItem3.Save();
+    //   testItem4.Save();
+    //
+    //   int numExistingItemsControl = 2;
+    //
+    //   //act
+    //   testCategory1.Delete();
+    //   int result = Item.GetAll().Count;
+    //
+    //   //assert
+    //   Assert.AreEqual(numExistingItemsControl, result);
+    // }
   }
 }

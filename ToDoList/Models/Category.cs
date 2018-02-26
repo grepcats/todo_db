@@ -111,7 +111,7 @@ namespace ToDoList.Models
         string itemDescription = rdr.GetString(1);
         string itemRawDate = rdr.GetString(2);
         int itemCategoryId = rdr.GetInt32(4);
-        Item newItem = new Item(itemDescription, itemRawDate, itemId, itemCategoryId);
+        Item newItem = new Item(itemDescription, itemRawDate, itemId);
         newItem.SetDate();
         allCategoryItems.Add(newItem);
       }
@@ -222,7 +222,7 @@ namespace ToDoList.Models
         string itemRawDate = rdr.GetString(2);
         int categoryId = rdr.GetInt32(4);
 
-        Item newItem = new Item(itemDescription, itemRawDate, itemId, categoryId);
+        Item newItem = new Item(itemDescription, itemRawDate, itemId);
         newItem.SetDate();
         sortedList.Add(newItem);
       }
@@ -255,7 +255,7 @@ namespace ToDoList.Models
         string itemRawDate = rdr.GetString(2);
         int categoryId = rdr.GetInt32(4);
 
-        Item newItem = new Item(itemDescription, itemRawDate, itemId, categoryId);
+        Item newItem = new Item(itemDescription, itemRawDate, itemId);
         newItem.SetDate();
         sortedList.Add(newItem);
       }
