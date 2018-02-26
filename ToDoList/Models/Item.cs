@@ -200,6 +200,8 @@ namespace ToDoList.Models
         return categories;
     }
 
+    
+
     public override bool Equals(System.Object otherItem)
     {
       if (!(otherItem is Item))
@@ -294,12 +296,12 @@ namespace ToDoList.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM items WHERE id = @thisId;";
+      cmd.CommandText = @"DELETE FROM items WHERE id = @ItemId; DELETE FROM categories_items WHERE item_id = @ItemId;";
 
-      MySqlParameter thisId = new MySqlParameter();
-      thisId.ParameterName = "@thisId";
-      thisId.Value = _id;
-      cmd.Parameters.Add(thisId);
+      MySqlParameter itemId = new MySqlParameter();
+      itemId.ParameterName = "@ItemId";
+      itemId.Value = this.GetId();
+      cmd.Parameters.Add(itemId);
 
       cmd.ExecuteNonQuery();
       conn.Close();

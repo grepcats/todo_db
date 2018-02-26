@@ -103,6 +103,74 @@ namespace ToDoList.Tests
       Assert.AreEqual(testCategory, foundCategory);
     }
 
+    [TestMethod]
+    public void Test_AddItem_AddsItemToCatetory()
+    {
+        //arrange
+        Category testCategory = new Category("Household chores");
+        testCategory.Save();
+
+        Item testItem = new Item("Mow the lawn", "2008-01-01");
+        testItem.Save();
+
+        Item testItem2 = new Item("Water the garden", "2008-01-01");
+        testItem2.Save();
+
+        //act
+        testCategory.AddItem(testItem);
+        testCategory.AddItem(testItem2);
+
+        List<Item> result = testCategory.GetItems();
+        List<Item> testList = new List<Item>{testItem, testItem2};
+
+        //assert
+        CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
+    public void GetItems_ReturnsAllCategoryItems_ItemList()
+    {
+        //arrange
+        Category testCategory = new Category("Household chores");
+        testCategory.Save();
+
+        Item testItem1 = new Item("Mow the lawn", "2008-01-01");
+        testItem1.Save();
+
+        Item testItem2 = new Item("Water the garden", "2008-01-01");
+        testItem2.Save();
+
+        //Act
+        testCategory.AddItem(testItem1);
+        List<Item> savedItems = testCategory.GetItems();
+        List<Item> testList = new List<Item> {testItem1};
+
+        //assert
+        CollectionAssert.AreEqual(testList, savedItems);
+    }
+
+    [TestMethod]
+    public void Delete_DeletesCategoryAssociationsFromDatabase_CategoryList()
+    {
+        //Arrange
+        Item testItem = new Item("Mow the lawn", "2007-01-01");
+        testItem.Save();
+
+        string testName = "Home stuff";
+        Category testCategory = new Category(testName);
+        testCategory.Save();
+
+        //Act
+        testCategory.AddItem(testItem);
+        testCategory.Delete();
+
+        List<Category> resultItemCategories = testItem.GetCategories();
+        List<Category> testItemCategories = new List<Category>{};
+
+        //Assert
+        CollectionAssert.AreEqual(testItemCategories, resultItemCategories);
+    }
+
     // [TestMethod]
     // public void Delete_DeleteCategoryFromDatabase_Void()
     // {
