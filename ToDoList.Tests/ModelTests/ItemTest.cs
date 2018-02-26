@@ -105,11 +105,11 @@ namespace ToDoList.Tests
     {
       //arrange
       Item testItem = new Item("Mow the lawn", "2008-03-02");
-      DateTime controlDate = new DateTime(2008, 03, 02);
+      DateTime? controlDate = new DateTime(2008, 03, 02);
 
       //act
       testItem.SetDate();
-      DateTime result = testItem.GetFormattedDate();
+      DateTime? result = testItem.GetFormattedDate();
 
       //assert
       Assert.AreEqual(result, controlDate);
@@ -125,7 +125,7 @@ namespace ToDoList.Tests
       string secondDescription = "Mow the Lawn";
 
       //act
-      testItem.Edit(secondDescription);
+      testItem.Edit(secondDescription, "2008-01-01");
       string result = Item.Find(testItem.GetId()).GetDescription();
 
       //Assert
